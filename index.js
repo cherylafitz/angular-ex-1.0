@@ -18,10 +18,25 @@ app.use(express.static(__dirname + '/public'));                 // set the stati
     app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
     app.use(methodOverride());
 
+var femaleVotes = 0;
+var maleVotes = 0;
 
-app.get('/api/malevote', function(req, res) {
+app.get('/api/vote', function(req, res) {
+  res.send({femaleVotes: femaleVotes, maleVotes: maleVotes});
+});
 
 
+app.post('/api/vote/:gender', function(req, res) {
+  if (req.params.gender === 'female') {
+    femaleVotes += 1;
+    res.send({female: femaleVotes});
+  } else if (req.params.gender === 'male') {
+    maleVotes += 1;
+    res.send({male: maleVotes});
+  } else {
+    res.send({error: error});
+  }
+  console.log(femaleVotes)
 });
 
 
